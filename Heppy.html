@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Космічний день народження, Аліно!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="50%" cy="50%" r="2" fill="white" opacity="0.6"/></svg>') repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(13, 26, 58, 0.8) 0%, rgba(0, 0, 0, 0.9) 70%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            padding: 2.5rem;
+            text-align: center;
+            background: rgba(13, 26, 58, 0.6);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(100, 149, 237, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(100, 149, 237, 0.3);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(100, 149, 237, 0.1) 0%, transparent 70%);
+            animation: rotate 60s linear infinite;
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #6ac0ff;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards 0.5s;
+            text-shadow: 0 0 10px rgba(106, 192, 255, 0.7);
+        }
+
+        .birthday-text {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ff6ac0;
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: scaleIn 1s forwards 1s;
+            text-shadow: 0 0 15px rgba(255, 106, 192, 0.7);
+        }
+
+        .name {
+            font-size: 3.5rem;
+            color: #6affc0;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1.5s;
+            text-shadow: 0 0 15px rgba(106, 255, 192, 0.7);
+        }
+
+        .name::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6ac0ff, #ff6ac0, #6affc0);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: lineGrow 1s forwards 2s;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards 2s;
+            color: #c9e6ff;
+        }
+
+        .hearts {
+            font-size: 2rem;
+            margin: 1.5rem 0;
+            opacity: 0;
+            animation: fadeIn 1s forwards 2.5s;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .special-message {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(13, 26, 58, 0.7);
+            border-radius: 10px;
+            border-left: 4px solid #6ac0ff;
+            color: #c9e6ff;
+            opacity: 0;
+            animation: fadeIn 1s forwards 3s;
+            font-size: 1.3rem;
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        #planet1 {
+            width: 120px;
+            height: 120px;
+            top: 10%;
+            right: 10%;
+            background: radial-gradient(circle at 30% 30%, #ff6ac0, #6a0ff0);
+            box-shadow: 0 0 30px rgba(255, 106, 192, 0.5);
+        }
+
+        #planet2 {
+            width: 80px;
+            height: 80px;
+            bottom: 15%;
+            left: 10%;
+            background: radial-gradient(circle at 30% 30%, #6affc0, #0f8a6a);
+            box-shadow: 0 0 30px rgba(106, 255, 192, 0.5);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite ease-in-out;
+        }
+
+        .meteor {
+            position: fixed;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(106,192,255,0) 100%);
+            box-shadow: 0 0 10px rgba(106, 192, 255, 0.8);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .frog {
+            position: fixed;
+            font-size: 2rem;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .brunyaha {
+            position: fixed;
+            font-size: 3rem;
+            z-index: 1;
+            pointer-events: none;
+            bottom: 10%;
+            right: 10%;
+            opacity: 0;
+            animation: fadeIn 3s forwards 4s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes lineGrow {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes fall {
+            to {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+
+        @keyframes sway {
+            from {
+                transform: translateX(-10px) rotate(-10deg);
+            }
+            to {
+                transform: translateX(10px) rotate(10deg);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .birthday-text {
+                font-size: 3rem;
+            }
+
+            .name {
+                font-size: 2.5rem;
+            }
+
+            .message {
+                font-size: 1rem;
+            }
+
+            .special-message {
+                font-size: 1.1rem;
+            }
+
+            #planet1, #planet2 {
+                display: none;
+            }
+
+            .brunyaha {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="planet" id="planet1"></div>
+    <div class="planet" id="planet2"></div>
+
+    <div class="container">
+        <h1>Космічний день народження!</h1>
+        <div class="birthday-text">З Днем</div>
+        <div class="birthday-text">Народження!</div>
+        <div class="name">Аліно</div>
+
+        <p class="message">
+            Нехай твоє життя буде наповнене зірковими моментами та космічним щастям!
+            Бажаю тобі сяяти яскравіше за будь-яку зірку в галактиці!
+        </p>
+
+        <div class="hearts">🚀 🌟 🪐 ✨ 🌌</div>
+
+        <div class="special-message">
+            Тебе вітають космічні жаби та ще тобі передає вітання Бруняха 🐸
+        </div>
+    </div>
+
+    <div class="brunyaha">🐸💫</div>
+
+    <script>
+        // Створення зірок на фоні
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 200;
+
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.width = (Math.random() * 3) + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Функція для створення космічного конфетті (зірки, що падають)
+        function createSpaceConfetti() {
+            const colors = ['#6ac0ff', '#ff6ac0', '#6affc0', '#ffffff', '#ffcc00'];
+
+            function generateConfetti() {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.width = (2 + Math.random() * 4) + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.boxShadow = '0 0 5px ' + colors[Math.floor(Math.random() * colors.length)];
+
+                const animationDuration = 2 + Math.random() * 4;
+
+                confetti.style.animation = `
+                    fall ${animationDuration}s linear forwards,
+                    sway ${animationDuration * 0.5}s ease-in-out alternate infinite
+                `;
+
+                document.body.appendChild(confetti);
+
+                // Видалення конфетті після завершення анімації
+                setTimeout(() => {
+                    confetti.remove();
+                }, animationDuration * 1000);
+            }
+
+            // Створюємо конфетті кожні 200ms
+            setInterval(generateConfetti, 200);
+        }
+
+        // Функція для створення космічних жаб
+        function createSpaceFrogs() {
+            function generateFrog() {
+                const frog = document.createElement('div');
+                frog.className = 'frog';
+                frog.textContent = '🐸';
+                frog.style.left = Math.random() * 80 + 10 + 'vw';
+                frog.style.top = Math.random() * 80 + 10 + 'vh';
+                frog.style.fontSize = (1 + Math.random() * 3) + 'rem';
+                frog.style.animationDelay = (Math.random() * 5) + 's';
+
+                document.body.appendChild(frog);
+
+                // Видалення жаби після певного часу
+                setTimeout(() => {
+                    frog.remove();
+                }, 10000);
+            }
+
+            // Створюємо жаб кожні 3 секунди
+            setInterval(generateFrog, 3000);
+
+            // Створити кілька жаб відразу
+            for (let i = 0; i < 5; i++) {
+                setTimeout(generateFrog, i * 500);
+            }
+        }
+
+        // Функція для створення постійного метеоритного дощу
+        function createContinuousMeteorShower() {
+            function generateMeteor() {
+                const meteor = document.createElement('div');
+                meteor.className = 'meteor';
+                meteor.style.width = (30 + Math.random() * 100) + 'px';
+                meteor.style.top = Math.random() * 50 + 'vh';
+                meteor.style.left = Math.random() * 20 + 'vw';
+                meteor.style.transformOrigin = 'left center';
+
+                const angle = Math.random() * 50 + 65;
+                meteor.style.transform = `rotate(${angle}deg)`;
+
+                document.body.appendChild(meteor);
+
+                // Анімація падіння метеора
+                const animationDuration = 0.5 + Math.random() * 1.5;
+                meteor.animate([
+                    { transform: `rotate(${angle}deg) translateX(0)`, opacity: 1 },
+                    { transform: `rotate(${angle}deg) translateX(100vw)`, opacity: 0 }
+                ], {
+                    duration: animationDuration * 1000,
+                    easing: 'linear'
+                });
+
+                // Видалення метеора після завершення анімації
+                setTimeout(() => {
+                    meteor.remove();
+                }, animationDuration * 1000);
+            }
+
+            // Запускаємо метеори кожні 500ms
+            setInterval(generateMeteor, 500);
+        }
+
+        // Додаємо анімацію плавного плавання контейнера
+        document.querySelector('.container').style.animation = 'float 15s infinite ease-in-out';
+
+        // Ініціалізація при завантаженні сторінки
+        window.addEventListener('load', function() {
+            createStars();
+            createSpaceConfetti();
+            createContinuousMeteorShower();
+            createSpaceFrogs();
+        });
+    </script>
+</body>
+</html>
